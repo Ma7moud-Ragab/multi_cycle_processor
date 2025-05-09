@@ -3,12 +3,11 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
 entity ControlUnit is
-  port( -- input
+  port( 
         CLK         : in std_logic;
         Reset       : in std_logic;
         Op          : in std_logic_vector(5 downto 0);
-
-        -- output (control signals)
+   
         PCWriteCond : out std_logic;
         PCWrite     : out std_logic;
         IorD        : out std_logic;
@@ -56,23 +55,23 @@ begin
 
       when InstructionFetch  => next_state <= InstructionDecode;
 
-      when InstructionDecode => if Op = "100011" then -- lw
+      when InstructionDecode => if Op = "100011" then 
                                   next_state <= MemoryAddressComp;
-                                elsif Op = "101011" then -- sw
+                                elsif Op = "101011" then 
                                   next_state <= MemoryAddressComp;
-                                elsif Op = "000000" then -- R-type
+                                elsif Op = "000000" then
                                   next_state <= Execution;
-                                elsif Op = "001000" then -- immediate
+                                elsif Op = "001000" then 
                                   next_state <= Execution_I;
-                                elsif Op = "000100" then -- BEQ
+                                elsif Op = "000100" then 
                                   next_state <= BranchCompletion;
-                                elsif Op = "000010" then -- Jump
+                                elsif Op = "000010" then 
                                   next_state <= JumpCompletion;
                                 end if;
 
-      when MemoryAddressComp => if Op = "100011" then -- lw
+      when MemoryAddressComp => if Op = "100011" then 
                                   next_state <= MemoryAccessLoad;
-                                else  -- sw
+                                else 
                                   next_state <= MemoryAccessStore;
                                 end if;
 
